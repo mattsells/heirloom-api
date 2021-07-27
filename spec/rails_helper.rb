@@ -69,6 +69,8 @@ RSpec.configure do |config|
 end
 
 SimpleCov.start 'rails' do
+  add_group 'Blueprints', 'app/blueprints'
+  add_group 'Policies', 'app/policies'
   add_group 'Services', 'app/services'
 end
 
