@@ -16,6 +16,7 @@ gem 'puma', '~> 5.0'
 
 # Authentication and authorization
 gem 'devise'
+gem "pundit"
 
 # Serialization
 gem 'blueprinter'
