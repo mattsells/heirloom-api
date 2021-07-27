@@ -1,24 +1,24 @@
-# README
+# Heirloom API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The API server for the Heirloom application
 
-Things you may want to cover:
+## Requirements
 
-* Ruby version
+* Ruby 3.0.0
+* Postgres v12
 
-* System dependencies
+## Setup
 
-* Configuration
+```
+git clone git@github.com:mattsells/heirloom-api.git && cd heirloom-api
 
-* Database creation
+bundle install
 
-* Database initialization
+rails db:create db:migrate
+```
 
-* How to run the test suite
+## Start Server
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+rails server
+```
