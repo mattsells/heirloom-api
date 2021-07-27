@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   devise_for :users,
              path: 'v1/users',
              controllers: {
-               registrations: 'v1/registrations'
+               registrations: 'v1/registrations',
+               sessions: 'v1/sessions'
              }
 end
