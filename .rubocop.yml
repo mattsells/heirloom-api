@@ -5,5 +5,8 @@ require:
 Layout/LineLength:
   Enabled: false
 
+Metrics/MethodLength:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
