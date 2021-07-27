@@ -43,4 +43,7 @@ group :development do
   # Linting
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
+
+  # Protect against n+1 queries
+  gem 'bullet'
 end
