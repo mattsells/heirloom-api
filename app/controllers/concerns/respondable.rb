@@ -3,6 +3,10 @@
 module Respondable
   extend ActiveSupport::Concern
 
+  included do
+    respond_to :json
+  end
+
   def respond_with(resource, *_config)
     if resource.persisted?
       render json: ::UserBlueprint.render(resource)
