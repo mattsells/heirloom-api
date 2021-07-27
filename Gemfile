@@ -36,10 +36,8 @@ group :development do
   # Linting
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
-end
 
-group :test do
-  # Testing
+    # Testing
   gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 5.0.0'
   gem 'shoulda-matchers', '~> 5.0'
