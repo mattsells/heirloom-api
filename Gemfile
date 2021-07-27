@@ -23,10 +23,6 @@ gem 'devise'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-
-  # Testing
-  gem 'factory_bot_rails'
-  gem 'rspec-rails', '~> 5.0.0'
 end
 
 group :development do
@@ -37,4 +33,12 @@ group :development do
   # Linting
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
+end
+
+group :test do
+  # Testing
+  gem 'factory_bot_rails'
+  gem 'rspec-rails', '~> 5.0.0'
+  gem 'shoulda-matchers', '~> 5.0'
+  gem 'simplecov', require: false
 end
