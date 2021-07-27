@@ -6,6 +6,7 @@ class AccountUser < ApplicationRecord
 
   enum role: {
     standard: 0,
-    admin: 1
+    admin: 1,
+    owner: 2
   }
 end
