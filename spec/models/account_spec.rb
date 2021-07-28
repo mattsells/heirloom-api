@@ -7,6 +7,7 @@ RSpec.describe Account, type: :model do
 
   describe 'Associations' do
     it { is_expected.to have_many(:account_users).dependent(:destroy) }
+    it { is_expected.to have_many(:recipes).dependent(:destroy) }
     it { is_expected.to have_many(:users).through(:account_users) }
   end
 end
