@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Registrations', type: :request do
-  describe 'POST /v1/users/sign_in' do
+  describe 'POST /v1/users' do
     context 'when the params are valid' do
       let(:params) do
         {
