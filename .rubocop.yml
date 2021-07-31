@@ -2,13 +2,20 @@ require:
   - rubocop-rails
   - rubocop-rspec
 
+
 Layout/LineLength:
+  Enabled: false
+
+Metrics/AbcSize:
   Enabled: false
 
 Metrics/BlockLength:
   Enabled: false
 
 Metrics/MethodLength:
+  Enabled: false
+
+RSpec/ImplicitSubject:
   Enabled: false
 
 Style/Documentation:

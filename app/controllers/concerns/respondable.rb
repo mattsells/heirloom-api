@@ -3,15 +3,15 @@
 module Respondable
   extend ActiveSupport::Concern
 
-  def respond_with(resource, *_config)
+  def respond_with(resource, **config)
     if resource.persisted?
-      render json: ::UserBlueprint.render(resource)
+      render json: ::UserBlueprint.render(resource), status: config[:status] || :ok
     else
-      render json: render_error(400, resource)
+      render error(:bad_request, resource)
     end
   end
 
-  def render_error(status, resource)
+  def error(status, resource)
     error = if resource.respond_to? :errors
               resource.errors.full_messages.first
             elsif resource.is_a? Array
@@ -21,8 +21,11 @@ module Respondable
             end
 
     {
-      status: status,
-      error: error
+      json: {
+        status: Rack::Utils::HTTP_STATUS_CODES[status],
+        error: error
+      },
+      status: status
     }
   end
 end

@@ -7,13 +7,13 @@ RSpec.describe AccountUser, type: :model do
 
   describe 'Attributes' do
     describe 'role' do
-      it {
-        expect(described_class).to define_enum_for(:role).with_values(
+      it do
+        is_expected.to define_enum_for(:role).with_values(
           standard: 0,
           admin: 1,
           owner: 2
         )
-      }
+      end
 
       it 'defaults to "standard"' do
         expect(record.role).to eq 'standard'
