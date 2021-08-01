@@ -31,13 +31,14 @@ ActiveRecord::Schema.define(version: 2021_07_27_234501) do
   end
 
   create_table "recipes", force: :cascade do |t|
-    t.string "name", null: false
     t.bigint "account_id", null: false
-    t.json "ingredients"
-    t.json "directions"
+    t.string "name", null: false
+    t.json "ingredients", default: "[]", null: false
+    t.json "directions", default: "[]", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["account_id"], name: "index_recipes_on_account_id"
+    t.index ["name", "account_id"], name: "index_recipes_on_name_and_account_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
