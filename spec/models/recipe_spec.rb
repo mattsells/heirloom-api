@@ -23,6 +23,14 @@ RSpec.describe Recipe, type: :model do
     describe 'directions' do
       it { is_expected.to validate_presence_of :directions }
     end
+
+    describe 'cover_image' do
+      let(:record) { FactoryBot.create(:recipe, :with_cover_image) }
+
+      it 'is a file attachment' do
+        expect(record.cover_image.mime_type).to eq('image/jpeg')
+      end
+    end
   end
 
   describe 'Associations' do

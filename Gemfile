@@ -22,6 +22,9 @@ gem 'pundit'
 gem 'blueprinter'
 gem 'olive_branch'
 
+# File storage
+gem 'shrine', '~> 3.0'
+
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
 

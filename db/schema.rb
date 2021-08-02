@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 2021_07_27_234501) do
   create_table "recipes", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.string "name", null: false
+    t.text "cover_image_data"
     t.json "ingredients", default: "[]", null: false
     t.json "directions", default: "[]", null: false
     t.datetime "created_at", precision: 6, null: false

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Recipe < ApplicationRecord
+  include ImageUploader::Attachment(:cover_image)
+
   belongs_to :account
 
   validates :name,
