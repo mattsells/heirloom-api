@@ -11,6 +11,14 @@ module V1
       render json: ::RecipeBlueprint.render(records)
     end
 
+    def create
+      record = Recipe.new(recipe_params)
+
+      authorize record
+
+      record.save
+    end
+
     private
 
     def recipe_params

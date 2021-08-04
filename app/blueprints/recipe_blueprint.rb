@@ -5,7 +5,9 @@ class RecipeBlueprint < Blueprinter::Base
 
   fields :directions, :ingredients, :name
 
-	field :cover_image do |user|
-		user.cover_image_url
-	end
+  # rubocop:disable Style/SymbolProc
+  field :cover_image do |user|
+    user.cover_image_url
+  end
+  # rubocop:enable Style/SymbolProc
 end

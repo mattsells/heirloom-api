@@ -18,7 +18,12 @@ RSpec.describe 'Recipes', type: :request do
         expect(ids(response)).to contain_exactly(*owned_recipes.pluck(:id))
       end
 
-      it 'renders the records with the requested blueprint' do
+      it 'renders the records with the normal blueprint by default' do
+        get v1_recipes_path, headers: sign_in(user)
+
+        record = body_of(response).first
+
+        expect(record.keys).to contain_exactly(:cover_image, :id, :directions, :ingredients, :name)
       end
 
       it 'filters the records on account_id' do
