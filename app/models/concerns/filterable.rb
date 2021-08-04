@@ -1,9 +1,11 @@
-module Filterable
-	extend ActiveSupport::Concern
+# frozen_string_literal: true
 
-	module ClassMethods
-    def filter(filtering_params)
-      results = self.where(nil)
+module Filterable
+  extend ActiveSupport::Concern
+
+  module ClassMethods
+    def sift(filtering_params)
+      results = where(nil)
 
       filtering_params.each do |key, value|
         results = results.public_send("filter_by_#{key}", value) if value.present?

@@ -1,27 +1,13 @@
+# frozen_string_literal: true
+
 module V1
   class RecipesController < ApiController
     def index
-      records = policy_scope(Recipe).filter(on(:account_id, :name))
+      authorize Recipe
 
-      authorize records
+      records = policy_scope(Recipe).sift(on(:account, :name)).includes(:account)
 
       render json: ::RecipeBlueprint.render(records)
-    end
-
-    def create
-
-    end
-
-    def show
-
-    end
-
-    def update
-
-    end
-
-    def destroy
-
     end
 
     private

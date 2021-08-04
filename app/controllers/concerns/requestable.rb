@@ -3,7 +3,7 @@
 module Requestable
   extend ActiveSupport::Concern
 
-	def on(*filters)
-		params.slice(*filters)
-	end
+  def on(*filters)
+    (params['filters'] || {}).slice(*filters)
+  end
 end

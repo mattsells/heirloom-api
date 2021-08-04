@@ -40,7 +40,6 @@ class ApplicationPolicy
     attr_reader :user, :scope
 
     def initialize(user, scope)
-      byebug
       @user = user
       @scope = scope
     end
