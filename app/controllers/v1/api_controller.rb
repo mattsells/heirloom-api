@@ -4,6 +4,9 @@ module V1
   class ApiController < ApplicationController
     include Pundit
     include Respondable
+    include Requestable
+
+    before_action :authenticate_user!
 
     after_action :verify_authorized
 

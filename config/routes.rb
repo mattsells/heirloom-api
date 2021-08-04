@@ -7,11 +7,15 @@ Rails.application.routes.draw do
 
   # Set default response type to ensure flash messages are not set
   defaults format: :json do
-    devise_scope :user do
-      scope :v1 do
+    scope :v1 do
+      devise_scope :user do
         post '/users/sign_up', to: 'v1/registrations#create', as: :v1_user_registration
         post '/users/sign_in', to: 'v1/sessions#create',      as: :v1_user_session
       end
+    end
+
+    namespace :v1 do
+      resources :recipes
     end
   end
 end

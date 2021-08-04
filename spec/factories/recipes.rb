@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'support/attachments'
+require_relative '../support/attachments'
 
 FactoryBot.define do
   factory :recipe do
