@@ -8,7 +8,8 @@ RSpec.describe 'Recipes', type: :request do
 
   describe 'GET /v1/recipes' do
     let!(:owned_recipes) { FactoryBot.create_list(:recipe, 3, account: account) }
-    let!(:unowned_recipes) { FactoryBot.create_list(:recipe, 3) }
+
+    before { FactoryBot.create_list(:recipe, 3) }
 
     context 'when the user is authorized' do
       it 'returns only records that the user has access to' do
@@ -36,7 +37,19 @@ RSpec.describe 'Recipes', type: :request do
         expect(ids(response)).to contain_exactly(recipe.id)
       end
 
-      # it 'filters the records on name'
+      it 'filters the records on name' do
+        recipe = FactoryBot.create(:recipe, account: account, name: 'zzzz')
+
+        params = {
+          filters: {
+            name: 'zz'
+          }
+        }
+
+        get v1_recipes_path, headers: sign_in(user), params: params
+
+        expect(ids(response)).to contain_exactly(recipe.id)
+      end
     end
 
     context 'when the user is not authenticated' do

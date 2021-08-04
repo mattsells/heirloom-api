@@ -7,6 +7,7 @@ module V1
 
       records = policy_scope(Recipe).sift(on(:account, :name)).includes(:account)
 
+      # TODO: Add blueprint formatting via request
       render json: ::RecipeBlueprint.render(records)
     end
 

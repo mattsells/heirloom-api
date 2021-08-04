@@ -15,6 +15,9 @@ Metrics/BlockLength:
 Metrics/MethodLength:
   Enabled: false
 
+RSpec/ExampleLength:
+  Enabled: false
+
 RSpec/ImplicitSubject:
   Enabled: false
 

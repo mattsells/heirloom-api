@@ -5,5 +5,7 @@ class RecipeBlueprint < Blueprinter::Base
 
   fields :directions, :ingredients, :name
 
-  field :cover_image, &:cover_image_url
+	field :cover_image do |user|
+		user.cover_image_url
+	end
 end
