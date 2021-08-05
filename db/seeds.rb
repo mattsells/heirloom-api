@@ -1,8 +1,24 @@
 # frozen_string_literal: true
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+
+seeds = []
+
+if Rails.env.production?
+  seeds << :production
+elsif Rails.env.development?
+  seeds.concat %i[production development]
+end
+
+seeds.each do |env|
+  env_path = Rails.root.join("db/#{env}")
+  manifest_path = File.join(env_path, 'manifest.yml')
+
+  manifest = YAML.safe_load(File.open(manifest_path))
+
+  next if manifest.blank?
+
+  manifest.each do |resource|
+    next if resource.blank?
+
+    load File.join(env_path, "#{resource}.rb")
+  end
+end
