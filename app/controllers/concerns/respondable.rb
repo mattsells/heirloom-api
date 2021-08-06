@@ -42,4 +42,12 @@ module Respondable
   def error_code_from_status(status)
     Rack::Utils::HTTP_STATUS_CODES[status]
   end
+
+  def blueprint_view
+    is_extended = ActiveModel::Type::Boolean.new.cast(params[:extended])
+
+    {
+      view: is_extended ? :extended : :normal
+    }
+  end
 end

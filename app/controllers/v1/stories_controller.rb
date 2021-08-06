@@ -7,8 +7,7 @@ module V1
                 .includes(:account)
                 .sift(on(:account, :content_type, :story_type, :name))
 
-      # TODO: Add blueprint formatting via request
-      render json: ::RecipeBlueprint.render(records)
+      render json: ::StoryBlueprint.render(records, blueprint_view)
     end
 
     # def show

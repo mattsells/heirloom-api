@@ -13,5 +13,19 @@ module Filterable
 
       results
     end
+
+    def extended_includes(params, *includes)
+      results = where(nil)
+
+      is_extended = ActiveModel::Type::Boolean.new.cast(params[:extended])
+
+      if is_extended
+        includes.each do |association|
+          results.includes(association)
+        end
+      end
+
+      results
+    end
   end
 end

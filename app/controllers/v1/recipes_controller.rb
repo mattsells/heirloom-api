@@ -6,11 +6,11 @@ module V1
       authorize Recipe
 
       records = policy_scope(Recipe)
-                .sift(on(:account, :name))
                 .includes(:account)
+                .extended_includes(params, :stories)
+                .sift(on(:account, :name))
 
-      # TODO: Add blueprint formatting via request
-      render json: ::RecipeBlueprint.render(records)
+      render json: ::RecipeBlueprint.render(records, blueprint_view)
     end
 
     def show
@@ -18,7 +18,7 @@ module V1
 
       authorize record
 
-      render json: ::RecipeBlueprint.render(record)
+      render json: ::RecipeBlueprint.render(record, blueprint_view)
     end
 
     def create
@@ -28,7 +28,7 @@ module V1
 
       record.save!
 
-      render json: ::RecipeBlueprint.render(record)
+      render json: ::RecipeBlueprint.render(record, blueprint_view)
     end
 
     def update
@@ -40,7 +40,7 @@ module V1
 
       record.save!
 
-      render json: ::RecipeBlueprint.render(record)
+      render json: ::RecipeBlueprint.render(record, blueprint_view)
     end
 
     def destroy

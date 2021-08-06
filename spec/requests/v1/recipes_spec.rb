@@ -54,6 +54,22 @@ RSpec.describe 'Recipes', type: :request do
         )
       end
 
+      it 'renders the records with the extended blueprint if specified' do
+        get v1_recipes_path, headers: sign_in(user), params: { extended: true }
+
+        record = body_of(response).first
+
+        expect(record.keys).to contain_exactly(
+          :account_id,
+          :cover_image,
+          :id,
+          :directions,
+          :ingredients,
+          :name,
+          :stories
+        )
+      end
+
       it 'filters the records on account_id' do
         account = FactoryBot.create(:account)
         recipe = FactoryBot.create(:recipe, account: account)
