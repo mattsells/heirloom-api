@@ -5,7 +5,9 @@ module V1
     def index
       authorize Recipe
 
-      records = policy_scope(Recipe).sift(on(:account, :name)).includes(:account)
+      records = policy_scope(Recipe)
+                .sift(on(:account, :name))
+                .includes(:account)
 
       # TODO: Add blueprint formatting via request
       render json: ::RecipeBlueprint.render(records)
