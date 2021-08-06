@@ -38,4 +38,28 @@ RSpec.describe Recipe, type: :model do
     it { is_expected.to have_many(:recipe_stories).dependent(:destroy) }
     it { is_expected.to have_many(:stories).through(:recipe_stories) }
   end
+
+  describe 'Scopes' do
+    describe 'filter_by_account' do
+      it 'filters by account' do
+        recipes = FactoryBot.create_list(:recipe, 3, account: account)
+        FactoryBot.create_list(:recipe, 3)
+
+        records = described_class.filter_by_account(account.id)
+
+        expect(records.pluck(:id)).to contain_exactly(*recipes.pluck(:id))
+      end
+    end
+
+    describe 'filter_by_name' do
+      it 'filters by account' do
+        recipe = FactoryBot.create(:recipe, name: 'Test recipe')
+        FactoryBot.create(:recipe, name: 'Unmatched')
+
+        records = described_class.filter_by_name('test')
+
+        expect(records.pluck(:id)).to contain_exactly(recipe.id)
+      end
+    end
+  end
 end
