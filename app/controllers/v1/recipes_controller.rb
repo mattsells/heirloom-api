@@ -21,6 +21,16 @@ module V1
       render json: ::RecipeBlueprint.render(record)
     end
 
+    def update
+      record = Recipe.find(params[:id])
+
+      authorize record
+
+      record.save!
+
+      render json: ::RecipeBlueprint.render(record)
+    end
+
     private
 
     def recipe_params
