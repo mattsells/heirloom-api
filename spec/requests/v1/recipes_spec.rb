@@ -23,7 +23,14 @@ RSpec.describe 'Recipes', type: :request do
 
         record = body_of(response).first
 
-        expect(record.keys).to contain_exactly(:cover_image, :id, :directions, :ingredients, :name)
+        expect(record.keys).to contain_exactly(
+          :account_id,
+          :cover_image,
+          :id,
+          :directions,
+          :ingredients,
+          :name
+        )
       end
 
       it 'filters the records on account_id' do
@@ -62,6 +69,68 @@ RSpec.describe 'Recipes', type: :request do
         get v1_recipes_path
 
         expect(response).to have_http_status :unauthorized
+      end
+    end
+  end
+
+  describe 'POST /v1/recipes' do
+    let(:valid_params) do
+      {
+        recipe: {
+          account_id: account.id,
+          directions: ['Step 1', 'Step 2'].to_s,
+          ingredients: ['Ingredient 1', 'Ingredient 2'].to_s,
+          name: 'New Recipe'
+        }
+      }
+    end
+
+    let(:invalid_params) do
+      {
+        recipe: {
+          account_id: account.id,
+          directions: ['Step 1', 'Step 2'].to_s,
+          ingredients: ['Ingredient 1', 'Ingredient 2'].to_s,
+          name: nil
+        }
+      }
+    end
+
+    context 'when the params are valid' do
+      it 'creates a recipe' do
+        expect { post v1_recipes_path, headers: sign_in(user), params: valid_params.to_json }.to change { Recipe.count }.by 1
+      end
+
+      it 'responds with the new recipe' do
+        post v1_recipes_path, headers: sign_in(user), params: valid_params.to_json
+
+        expect(body_of(response)).to match(hash_including(valid_params[:recipe]))
+      end
+    end
+
+    context 'when the params are invalid' do
+      it 'returns http status bad_request' do
+        post v1_recipes_path, headers: sign_in(user), params: invalid_params.to_json
+
+        expect(response).to have_http_status :bad_request
+      end
+    end
+
+    context 'when the user is not authenticated' do
+      it 'returns http status unauthorized' do
+        post v1_recipes_path, params: valid_params.to_json
+
+        expect(response).to have_http_status :unauthorized
+      end
+    end
+
+    context 'when the user is not authorized' do
+      it 'returns http status forbidden' do
+        user = FactoryBot.create(:user)
+
+        post v1_recipes_path, headers: sign_in(user), params: valid_params.to_json
+
+        expect(response).to have_http_status :forbidden
       end
     end
   end

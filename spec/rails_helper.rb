@@ -75,6 +75,3 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
-def parse_body(response)
-  JSON.parse(response.body).deep_symbolize_keys
-end

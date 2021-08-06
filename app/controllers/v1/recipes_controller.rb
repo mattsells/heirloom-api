@@ -16,7 +16,9 @@ module V1
 
       authorize record
 
-      record.save
+      record.save!
+
+      render json: ::RecipeBlueprint.render(record)
     end
 
     private

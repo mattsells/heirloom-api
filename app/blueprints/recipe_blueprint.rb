@@ -3,7 +3,7 @@
 class RecipeBlueprint < Blueprinter::Base
   identifier :id
 
-  fields :directions, :ingredients, :name
+  fields :account_id, :directions, :ingredients, :name
 
   # rubocop:disable Style/SymbolProc
   field :cover_image do |user|

@@ -12,4 +12,8 @@ class RecipePolicy < ApplicationPolicy
   def index?
     true
   end
+
+  def create?
+    user.member_of? record.account
+  end
 end
