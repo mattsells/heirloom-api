@@ -7,10 +7,10 @@ class CreateRecipes < ActiveRecord::Migration[6.1]
 
       t.string :name, null: false, length: 200
 
-      t.text :cover_image_data
+      t.json :cover_image_data
 
       t.json :ingredients, null: false, default: '[]'
-      t.json :directions, null: false, default: '[]'
+      t.json :directions,  null: false, default: '[]'
 
       t.timestamps
     end

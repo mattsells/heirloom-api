@@ -10,8 +10,9 @@ RSpec.describe 'Recipes', type: :request do
     {
       recipe: {
         account_id: account.id,
-        directions: ['Step 1', 'Step 2'].to_s,
-        ingredients: ['Ingredient 1', 'Ingredient 2'].to_s,
+        cover_image: Support::Attachments.image_data,
+        directions: ['Step 1', 'Step 2'].to_json,
+        ingredients: ['Ingredient 1', 'Ingredient 2'].to_json,
         name: 'New Recipe'
       }
     }
@@ -146,7 +147,7 @@ RSpec.describe 'Recipes', type: :request do
       it 'responds with the new recipe' do
         post v1_recipes_path, headers: sign_in(user), params: valid_params.to_json
 
-        expect(body_of(response)).to match(hash_including(valid_params[:recipe]))
+        expect(body_of(response)).to match(hash_including(valid_params[:recipe].slice(:name)))
       end
     end
 
@@ -180,15 +181,23 @@ RSpec.describe 'Recipes', type: :request do
   describe 'PATCH /v1/recipes/:id' do
     let(:recipe) { FactoryBot.create(:recipe, account: account) }
 
+    let(:params) do
+      {
+        recipe: {
+          name: 'Updated name'
+        }
+      }
+    end
+
     context 'when the params are valid' do
       it 'updates the recipe' do
-        patch v1_recipe_path(recipe), headers: sign_in(user), params: valid_params.to_json
+        patch v1_recipe_path(recipe), headers: sign_in(user), params: params.to_json
       end
 
       it 'responds with the updated recipe' do
-        patch v1_recipe_path(recipe), headers: sign_in(user), params: valid_params.to_json
+        patch v1_recipe_path(recipe), headers: sign_in(user), params: params.to_json
 
-        expect(body_of(response)).to match(hash_including(valid_params[:recipe]))
+        expect(body_of(response)).to match(hash_including(params[:recipe].slice(:name)))
       end
     end
 
@@ -202,7 +211,7 @@ RSpec.describe 'Recipes', type: :request do
 
     context 'when the user is not authenticated' do
       it 'responds with http status unauthorized' do
-        patch v1_recipe_path(recipe), params: valid_params.to_json
+        patch v1_recipe_path(recipe), params: params.to_json
 
         expect(response).to have_http_status :unauthorized
       end
@@ -212,7 +221,7 @@ RSpec.describe 'Recipes', type: :request do
       it 'responds with http status forbidden' do
         user = FactoryBot.create(:user)
 
-        patch v1_recipe_path(recipe), headers: sign_in(user), params: valid_params.to_json
+        patch v1_recipe_path(recipe), headers: sign_in(user), params: params.to_json
 
         expect(response).to have_http_status :forbidden
       end
