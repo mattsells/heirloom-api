@@ -6,6 +6,10 @@ class Story < ApplicationRecord
 
   belongs_to :account
 
+  has_many :recipe_stories, dependent: :destroy
+
+  has_many :recipes, through: :recipe_stories
+
   enum content_type: {
     image: 0,
     video: 1

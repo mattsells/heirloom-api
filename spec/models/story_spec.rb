@@ -25,5 +25,7 @@ RSpec.describe Story, type: :model do
 
   describe 'Associations' do
     it { is_expected.to belong_to(:account) }
+    it { is_expected.to have_many(:recipe_stories).dependent(:destroy) }
+    it { is_expected.to have_many(:recipes).through(:recipe_stories) }
   end
 end

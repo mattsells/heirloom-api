@@ -6,6 +6,10 @@ class Recipe < ApplicationRecord
 
   belongs_to :account
 
+  has_many :recipe_stories, dependent: :destroy
+
+  has_many :stories, through: :recipe_stories
+
   validates :name,
             presence: true,
             length: { maximum: 200 },
