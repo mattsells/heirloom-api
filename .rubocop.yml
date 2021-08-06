@@ -15,6 +15,11 @@ Metrics/BlockLength:
 Metrics/MethodLength:
   Enabled: false
 
+Rails/Output:
+  Exclude:
+    - db/development/**/*
+    - db/production/**/*
+
 RSpec/ExampleLength:
   Enabled: false
 

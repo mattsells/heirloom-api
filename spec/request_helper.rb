@@ -29,10 +29,10 @@ module RequestHelper
   end
 
   # def image_data
-  #   { 
+  #   {
   #     "id": "43kewit94.jpg",
   #     "storage": "cache",
-  #     "metadata": { 
+  #     "metadata": {
   #       "size": 384393,
   #       "filename": "nature.jpg",
   #       "mime_type": "image/jpeg"
