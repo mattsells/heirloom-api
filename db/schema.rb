@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_04_005740) do
+ActiveRecord::Schema.define(version: 2021_08_06_193737) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,19 @@ ActiveRecord::Schema.define(version: 2021_08_04_005740) do
     t.index ["name", "account_id"], name: "index_recipes_on_name_and_account_id", unique: true
   end
 
+  create_table "stories", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.integer "content_type", default: 0, null: false
+    t.integer "story_type", default: 0, null: false
+    t.string "name"
+    t.text "description"
+    t.json "image_data"
+    t.json "video_data"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_stories_on_account_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -65,4 +78,5 @@ ActiveRecord::Schema.define(version: 2021_08_04_005740) do
   add_foreign_key "account_users", "accounts"
   add_foreign_key "account_users", "users"
   add_foreign_key "recipes", "accounts"
+  add_foreign_key "stories", "accounts"
 end
