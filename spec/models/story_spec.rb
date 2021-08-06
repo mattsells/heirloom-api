@@ -5,6 +5,8 @@ require 'rails_helper'
 RSpec.describe Story, type: :model do
   let(:record) { FactoryBot.create(:story) }
 
+  let(:account) { FactoryBot.create(:account) }
+
   describe 'Attributes' do
     describe 'image' do
       let(:record) { FactoryBot.create(:story, :with_image) }
@@ -27,5 +29,44 @@ RSpec.describe Story, type: :model do
     it { is_expected.to belong_to(:account) }
     it { is_expected.to have_many(:recipe_stories).dependent(:destroy) }
     it { is_expected.to have_many(:recipes).through(:recipe_stories) }
+  end
+
+  describe 'Scope' do
+    it 'filters by account' do
+      stories = FactoryBot.create_list(:story, 3, account: account)
+      FactoryBot.create_list(:story, 3)
+
+      records = described_class.filter_by_account(account.id)
+
+      expect(records.pluck(:id)).to contain_exactly(*stories.pluck(:id))
+    end
+
+    it 'filters by name' do
+      story = FactoryBot.create(:story, name: 'Test story')
+      FactoryBot.create(:story, name: 'Unmatched')
+
+      records = described_class.filter_by_name('test')
+
+      expect(records.pluck(:id)).to contain_exactly(story.id)
+    end
+
+    it 'filters by content type' do
+      stories = FactoryBot.create_list(:story, 3, content_type: 'image')
+      FactoryBot.create_list(:story, 3, content_type: 'video')
+
+      records = described_class.filter_by_content_type('image')
+
+      expect(records.pluck(:id)).to contain_exactly(*stories.pluck(:id))
+    end
+
+    it 'filters by story type' do
+      stories = FactoryBot.create_list(:story, 3, story_type: 'artifact')
+      FactoryBot.create_list(:story, 3, story_type: 'memory')
+      FactoryBot.create_list(:story, 3, story_type: 'direction')
+
+      records = described_class.filter_by_story_type('artifact')
+
+      expect(records.pluck(:id)).to contain_exactly(*stories.pluck(:id))
+    end
   end
 end

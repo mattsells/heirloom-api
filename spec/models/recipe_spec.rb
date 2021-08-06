@@ -52,7 +52,7 @@ RSpec.describe Recipe, type: :model do
     end
 
     describe 'filter_by_name' do
-      it 'filters by account' do
+      it 'filters by name' do
         recipe = FactoryBot.create(:recipe, name: 'Test recipe')
         FactoryBot.create(:recipe, name: 'Unmatched')
 

@@ -20,4 +20,9 @@ class Story < ApplicationRecord
     direction: 1,
     memory: 2
   }
+
+  scope :filter_by_account, ->(account_id) { where account_id: account_id }
+  scope :filter_by_content_type, ->(content_type) { where content_type: content_type }
+  scope :filter_by_name, ->(name) { where 'name ILIKE ?', "#{name}%" }
+  scope :filter_by_story_type, ->(story_type) { where story_type: story_type }
 end
