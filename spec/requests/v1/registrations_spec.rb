@@ -26,7 +26,7 @@ RSpec.describe 'Registrations', type: :request do
 
       it 'responds with the user json' do
         post v1_user_registration_path, params: params
-        expect(parse_body(response).keys).to include(*%i[id email])
+        expect(body_of(response).keys).to include(*%i[id email])
       end
     end
 
