@@ -20,7 +20,11 @@ module RequestHelper
     body.map(&:deep_symbolize_keys)
   end
 
-  def ids(response)
+  def ids_of(response)
     body_of(response).map { |recipe| recipe[:id] }
+  end
+
+  def id_of(response)
+    body_of(response)[:id]
   end
 end

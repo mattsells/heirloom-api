@@ -11,6 +11,16 @@ module Respondable
     end
   end
 
+  def success(message, status = :ok)
+    {
+      json: {
+        status: error_code_from_status(status),
+        message: message
+      },
+      status: status
+    }
+  end
+
   def error(status, resource)
     error = if resource.respond_to? :errors
               resource.errors.full_messages.first
@@ -22,10 +32,14 @@ module Respondable
 
     {
       json: {
-        status: Rack::Utils::HTTP_STATUS_CODES[status],
+        status: error_code_from_status(status),
         error: error
       },
       status: status
     }
+  end
+
+  def error_code_from_status(status)
+    Rack::Utils::HTTP_STATUS_CODES[status]
   end
 end

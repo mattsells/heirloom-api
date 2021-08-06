@@ -13,7 +13,19 @@ class RecipePolicy < ApplicationPolicy
     true
   end
 
+  def show?
+    user.member_of? record.account
+  end
+
   def create?
+    user.member_of? record.account
+  end
+
+  def update?
+    user.member_of? record.account
+  end
+
+  def destroy?
     user.member_of? record.account
   end
 end

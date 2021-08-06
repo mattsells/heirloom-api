@@ -21,8 +21,6 @@ RSpec.describe 'Recipes', type: :request do
     {
       recipe: {
         account_id: account.id,
-        directions: ['Step 1', 'Step 2'].to_s,
-        ingredients: ['Ingredient 1', 'Ingredient 2'].to_s,
         name: nil
       }
     }
@@ -37,7 +35,7 @@ RSpec.describe 'Recipes', type: :request do
       it 'returns only records that the user has access to' do
         get v1_recipes_path, headers: sign_in(user)
 
-        expect(ids(response)).to contain_exactly(*owned_recipes.pluck(:id))
+        expect(ids_of(response)).to contain_exactly(*owned_recipes.pluck(:id))
       end
 
       it 'renders the records with the normal blueprint by default' do
@@ -68,7 +66,7 @@ RSpec.describe 'Recipes', type: :request do
 
         get v1_recipes_path, headers: sign_in(user), params: params
 
-        expect(ids(response)).to contain_exactly(recipe.id)
+        expect(ids_of(response)).to contain_exactly(recipe.id)
       end
 
       it 'filters the records on name' do
@@ -82,12 +80,12 @@ RSpec.describe 'Recipes', type: :request do
 
         get v1_recipes_path, headers: sign_in(user), params: params
 
-        expect(ids(response)).to contain_exactly(recipe.id)
+        expect(ids_of(response)).to contain_exactly(recipe.id)
       end
     end
 
     context 'when the user is not authenticated' do
-      it 'returns http status unauthorized' do
+      it 'responds with http status unauthorized' do
         get v1_recipes_path
 
         expect(response).to have_http_status :unauthorized
@@ -95,10 +93,54 @@ RSpec.describe 'Recipes', type: :request do
     end
   end
 
+  describe 'GET /v1/recipe/:id' do
+    let(:recipe) { FactoryBot.create(:recipe, account: account) }
+
+    context 'when the record exists' do
+      it 'responds with the recipe' do
+        get v1_recipe_path(recipe), headers: sign_in(user)
+
+        expect(id_of(response)).to eq recipe.id
+      end
+
+      it 'responds with http status ok' do
+        get v1_recipe_path(recipe), headers: sign_in(user)
+
+        expect(response).to have_http_status :ok
+      end
+    end
+
+    context 'when the record does not exist' do
+      it 'responds with http status not_found' do
+        get v1_recipe_path('invalid'), headers: sign_in(user)
+
+        expect(response).to have_http_status :not_found
+      end
+    end
+
+    context 'when the user is not authenticated' do
+      it 'responds with http status unauthorized' do
+        get v1_recipe_path(recipe)
+
+        expect(response).to have_http_status :unauthorized
+      end
+    end
+
+    context 'when the user is not authorized' do
+      it 'responds with http status forbidden' do
+        user = FactoryBot.create(:user)
+
+        get v1_recipe_path(recipe), headers: sign_in(user)
+
+        expect(response).to have_http_status :forbidden
+      end
+    end
+  end
+
   describe 'POST /v1/recipes' do
     context 'when the params are valid' do
       it 'creates a recipe' do
-        expect { post v1_recipes_path, headers: sign_in(user), params: valid_params.to_json }.to change { Recipe.count }.by 1
+        expect { post v1_recipes_path, headers: sign_in(user), params: valid_params.to_json }.to change(Recipe, :count).by 1
       end
 
       it 'responds with the new recipe' do
@@ -109,7 +151,7 @@ RSpec.describe 'Recipes', type: :request do
     end
 
     context 'when the params are invalid' do
-      it 'returns http status bad_request' do
+      it 'responds with http status bad_request' do
         post v1_recipes_path, headers: sign_in(user), params: invalid_params.to_json
 
         expect(response).to have_http_status :bad_request
@@ -117,7 +159,7 @@ RSpec.describe 'Recipes', type: :request do
     end
 
     context 'when the user is not authenticated' do
-      it 'returns http status unauthorized' do
+      it 'responds with http status unauthorized' do
         post v1_recipes_path, params: valid_params.to_json
 
         expect(response).to have_http_status :unauthorized
@@ -125,7 +167,7 @@ RSpec.describe 'Recipes', type: :request do
     end
 
     context 'when the user is not authorized' do
-      it 'returns http status forbidden' do
+      it 'responds with http status forbidden' do
         user = FactoryBot.create(:user)
 
         post v1_recipes_path, headers: sign_in(user), params: valid_params.to_json
@@ -151,7 +193,7 @@ RSpec.describe 'Recipes', type: :request do
     end
 
     context 'when the params are invalid' do
-      it 'returns http status bad_request' do
+      it 'responds with http status bad_request' do
         patch v1_recipe_path(recipe), headers: sign_in(user), params: invalid_params.to_json
 
         expect(response).to have_http_status :bad_request
@@ -159,7 +201,7 @@ RSpec.describe 'Recipes', type: :request do
     end
 
     context 'when the user is not authenticated' do
-      it 'returns http status unauthorized' do
+      it 'responds with http status unauthorized' do
         patch v1_recipe_path(recipe), params: valid_params.to_json
 
         expect(response).to have_http_status :unauthorized
@@ -167,10 +209,52 @@ RSpec.describe 'Recipes', type: :request do
     end
 
     context 'when the user is not authorized' do
-      it 'returns http status forbidden' do
+      it 'responds with http status forbidden' do
         user = FactoryBot.create(:user)
 
         patch v1_recipe_path(recipe), headers: sign_in(user), params: valid_params.to_json
+
+        expect(response).to have_http_status :forbidden
+      end
+    end
+  end
+
+  describe 'DELETE /v1/recipes/:id' do
+    let(:recipe) { FactoryBot.create(:recipe, account: account) }
+
+    context 'when the record exists' do
+      it 'destroys the recipe' do
+        delete v1_recipe_path(recipe), headers: sign_in(user)
+      end
+
+      it 'responds with http status ok' do
+        delete v1_recipe_path(recipe), headers: sign_in(user)
+
+        expect(response).to have_http_status :ok
+      end
+    end
+
+    context 'when the record does not exist' do
+      it 'responds with http status not_found' do
+        delete v1_recipe_path('invalid'), headers: sign_in(user)
+
+        expect(response).to have_http_status :not_found
+      end
+    end
+
+    context 'when the user is not authenticated' do
+      it 'responds with http status unauthorized' do
+        delete v1_recipe_path(recipe)
+
+        expect(response).to have_http_status :unauthorized
+      end
+    end
+
+    context 'when the user is not authorized' do
+      it 'responds with http status forbidden' do
+        user = FactoryBot.create(:user)
+
+        delete v1_recipe_path(recipe), headers: sign_in(user)
 
         expect(response).to have_http_status :forbidden
       end

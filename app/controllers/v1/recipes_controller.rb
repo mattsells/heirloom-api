@@ -11,6 +11,14 @@ module V1
       render json: ::RecipeBlueprint.render(records)
     end
 
+    def show
+      record = Recipe.find(params[:id])
+
+      authorize record
+
+      render json: ::RecipeBlueprint.render(record)
+    end
+
     def create
       record = Recipe.new(recipe_params)
 
@@ -24,11 +32,23 @@ module V1
     def update
       record = Recipe.find(params[:id])
 
+      record.assign_attributes(recipe_params)
+
       authorize record
 
       record.save!
 
       render json: ::RecipeBlueprint.render(record)
+    end
+
+    def destroy
+      record = Recipe.find(params[:id])
+
+      authorize record
+
+      record.destroy!
+
+      render success(I18n.t('general.destroyed'))
     end
 
     private

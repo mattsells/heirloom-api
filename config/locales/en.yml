@@ -31,4 +31,7 @@
 
 en:
   errors:
+    not_found: The requested record could not be found
     unauthorized: You are not permitted to perform this action
+  general:
+    destroyed: The record was successfuly destroyed
