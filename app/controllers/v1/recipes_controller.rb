@@ -6,7 +6,6 @@ module V1
       authorize Recipe
 
       records = policy_scope(Recipe)
-                .includes(:account)
                 .extended_includes(params, :stories)
                 .sift(on(:account, :name))
 

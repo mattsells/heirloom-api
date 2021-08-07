@@ -22,3 +22,8 @@ seeds.each do |env|
     load File.join(env_path, "#{resource}.rb")
   end
 end
+
+puts "Created #{Account.count} accounts"
+puts "Created #{User.count} users"
+puts "Created #{Recipe.count} recipes"
+puts "Created #{Story.count} recipes"
