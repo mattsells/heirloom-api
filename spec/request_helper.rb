@@ -27,16 +27,4 @@ module RequestHelper
   def id_of(response)
     body_of(response)[:id]
   end
-
-  # def image_data
-  #   {
-  #     "id": "43kewit94.jpg",
-  #     "storage": "cache",
-  #     "metadata": {
-  #       "size": 384393,
-  #       "filename": "nature.jpg",
-  #       "mime_type": "image/jpeg"
-  #     }
-  #   }
-  # end
 end

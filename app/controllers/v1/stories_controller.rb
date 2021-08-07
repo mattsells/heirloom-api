@@ -30,17 +30,17 @@ module V1
       render json: ::StoryBlueprint.render(record, blueprint_view)
     end
 
-    # def update
-    #   record = Story.find(params[:id])
+    def update
+      record = Story.find(params[:id])
 
-    #   record.assign_attributes(story_params)
+      record.assign_attributes(story_params)
 
-    #   authorize record
+      authorize record
 
-    #   record.save!
+      record.save!
 
-    #   render json: ::StoryBlueprint.render(record, blueprint_view)
-    # end
+      render json: ::StoryBlueprint.render(record, blueprint_view)
+    end
 
     # def destroy
     #   record = Story.find(params[:id])
