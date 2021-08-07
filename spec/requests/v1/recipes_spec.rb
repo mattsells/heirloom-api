@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Recipes', type: :request do
   let(:user) { FactoryBot.create(:user) }
-  let(:account) { user.accounts.first }
+  let(:account) { user.own_account }
 
   let(:valid_params) do
     {
@@ -46,7 +46,7 @@ RSpec.describe 'Recipes', type: :request do
 
         expect(record.keys).to contain_exactly(
           :account_id,
-          :cover_image,
+          :cover_image_url,
           :id,
           :directions,
           :ingredients,
@@ -61,7 +61,7 @@ RSpec.describe 'Recipes', type: :request do
 
         expect(record.keys).to contain_exactly(
           :account_id,
-          :cover_image,
+          :cover_image_url,
           :id,
           :directions,
           :ingredients,

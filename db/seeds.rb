@@ -23,7 +23,9 @@ seeds.each do |env|
   end
 end
 
+# rubocop:disable Rails/Output
 puts "Created #{Account.count} accounts"
 puts "Created #{User.count} users"
 puts "Created #{Recipe.count} recipes"
 puts "Created #{Story.count} recipes"
+# rubocop:enable Rails/Output

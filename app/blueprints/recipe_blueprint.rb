@@ -4,13 +4,11 @@ class RecipeBlueprint < Blueprinter::Base
   identifier :id
 
   view :normal do
-    fields :account_id, :directions, :ingredients, :name
-
-    # rubocop:disable Style/SymbolProc
-    field :cover_image do |user|
-      user.cover_image_url
-    end
-    # rubocop:enable Style/SymbolProc
+    fields :account_id,
+           :cover_image_url,
+           :directions,
+           :ingredients,
+           :name
   end
 
   view :extended do

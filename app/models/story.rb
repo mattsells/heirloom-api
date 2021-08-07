@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Story < ApplicationRecord
+  include Filterable
   include ImageUploader::Attachment(:image)
   include VideoUploader::Attachment(:video)
 

@@ -2,7 +2,6 @@ require:
   - rubocop-rails
   - rubocop-rspec
 
-
 Layout/LineLength:
   Enabled: false
 

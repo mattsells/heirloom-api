@@ -1,10 +1,11 @@
+# frozen_string_literal: true
+
 module V1
-  class StoriesController < ApplicationController
+  class StoriesController < ApiController
     def index
       authorize Story
 
       records = policy_scope(Story)
-                .includes(:account)
                 .extended_includes(params, :stories)
                 .sift(on(:account, :content_type, :story_type, :name))
 
