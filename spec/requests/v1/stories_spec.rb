@@ -233,4 +233,96 @@ RSpec.describe 'Stories', type: :request do
       end
     end
   end
+
+  describe 'PATCH /v1/stories/:id' do
+    let(:story) { FactoryBot.create(:story, account: account) }
+
+    let(:params) do
+      {
+        story: {
+          name: 'Updated name'
+        }
+      }
+    end
+
+    context 'when the params are valid' do
+      it 'updates the story' do
+        patch v1_story_path(story), headers: sign_in(user), params: params.to_json
+      end
+
+      it 'responds with the updated story' do
+        patch v1_story_path(story), headers: sign_in(user), params: params.to_json
+
+        expect(body_of(response)).to match(hash_including(params[:story].slice(:name)))
+      end
+    end
+
+    context 'when the params are invalid' do
+      it 'responds with http status bad_request' do
+        patch v1_story_path(story), headers: sign_in(user), params: invalid_params.to_json
+
+        expect(response).to have_http_status :bad_request
+      end
+    end
+
+    context 'when the user is not authenticated' do
+      it 'responds with http status unauthorized' do
+        patch v1_story_path(story), params: params.to_json
+
+        expect(response).to have_http_status :unauthorized
+      end
+    end
+
+    context 'when the user is not authorized' do
+      it 'responds with http status forbidden' do
+        user = FactoryBot.create(:user)
+
+        patch v1_story_path(story), headers: sign_in(user), params: params.to_json
+
+        expect(response).to have_http_status :forbidden
+      end
+    end
+  end
+
+  describe 'DELETE /v1/stories/:id' do
+    let(:story) { FactoryBot.create(:story, account: account) }
+
+    context 'when the record exists' do
+      it 'destroys the story' do
+        delete v1_story_path(story), headers: sign_in(user)
+      end
+
+      it 'responds with http status ok' do
+        delete v1_story_path(story), headers: sign_in(user)
+
+        expect(response).to have_http_status :ok
+      end
+    end
+
+    context 'when the record does not exist' do
+      it 'responds with http status not_found' do
+        delete v1_story_path('invalid'), headers: sign_in(user)
+
+        expect(response).to have_http_status :not_found
+      end
+    end
+
+    context 'when the user is not authenticated' do
+      it 'responds with http status unauthorized' do
+        delete v1_story_path(story)
+
+        expect(response).to have_http_status :unauthorized
+      end
+    end
+
+    context 'when the user is not authorized' do
+      it 'responds with http status forbidden' do
+        user = FactoryBot.create(:user)
+
+        delete v1_story_path(story), headers: sign_in(user)
+
+        expect(response).to have_http_status :forbidden
+      end
+    end
+  end
 end

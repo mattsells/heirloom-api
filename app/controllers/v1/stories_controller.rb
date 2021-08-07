@@ -42,15 +42,15 @@ module V1
       render json: ::StoryBlueprint.render(record, blueprint_view)
     end
 
-    # def destroy
-    #   record = Story.find(params[:id])
+    def destroy
+      record = Story.find(params[:id])
 
-    #   authorize record
+      authorize record
 
-    #   record.destroy!
+      record.destroy!
 
-    #   render success(I18n.t('general.destroyed'))
-    # end
+      render success(I18n.t('general.destroyed'))
+    end
 
     private
 
