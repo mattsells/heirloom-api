@@ -12,13 +12,13 @@ module V1
       render json: ::StoryBlueprint.render(records, blueprint_view)
     end
 
-    # def show
-    #   record = Recipe.find(params[:id])
+    def show
+      record = Story.find(params[:id])
 
-    #   authorize record
+      authorize record
 
-    #   render json: ::RecipeBlueprint.render(record)
-    # end
+      render json: ::StoryBlueprint.render(record, blueprint_view)
+    end
 
     # def create
     #   record = Recipe.new(recipe_params)
@@ -27,7 +27,7 @@ module V1
 
     #   record.save!
 
-    #   render json: ::RecipeBlueprint.render(record)
+    #   render json: ::StoryBlueprint.render(record)
     # end
 
     # def update
@@ -39,7 +39,7 @@ module V1
 
     #   record.save!
 
-    #   render json: ::RecipeBlueprint.render(record)
+    #   render json: ::StoryBlueprint.render(record)
     # end
 
     # def destroy

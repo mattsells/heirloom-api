@@ -21,7 +21,7 @@ RSpec.describe 'Stories', type: :request do
 
   let(:invalid_params) do
     {
-      recipe: {
+      story: {
         account_id: account.id,
         content_type: 'invalid',
         description: 'Story description',
@@ -119,7 +119,7 @@ RSpec.describe 'Stories', type: :request do
 
         get v1_stories_path, headers: sign_in(user), params: params
 
-        content_types = body_of(response).map { |recipe| recipe[:content_type] }.uniq
+        content_types = body_of(response).map { |story| story[:content_type] }.uniq
         expect(content_types).to contain_exactly('image')
       end
 
@@ -136,7 +136,7 @@ RSpec.describe 'Stories', type: :request do
 
         get v1_stories_path, headers: sign_in(user), params: params
 
-        story_type = body_of(response).map { |recipe| recipe[:story_type] }.uniq
+        story_type = body_of(response).map { |story| story[:story_type] }.uniq
         expect(story_type).to contain_exactly('artifact')
       end
     end
@@ -146,6 +146,50 @@ RSpec.describe 'Stories', type: :request do
         get v1_stories_path
 
         expect(response).to have_http_status :unauthorized
+      end
+    end
+  end
+
+  describe 'GET /v1/story/:id' do
+    let(:story) { FactoryBot.create(:story, account: account) }
+
+    context 'when the record exists' do
+      it 'responds with the story' do
+        get v1_story_path(story), headers: sign_in(user)
+
+        expect(id_of(response)).to eq story.id
+      end
+
+      it 'responds with http status ok' do
+        get v1_story_path(story), headers: sign_in(user)
+
+        expect(response).to have_http_status :ok
+      end
+    end
+
+    context 'when the record does not exist' do
+      it 'responds with http status not_found' do
+        get v1_story_path('invalid'), headers: sign_in(user)
+
+        expect(response).to have_http_status :not_found
+      end
+    end
+
+    context 'when the user is not authenticated' do
+      it 'responds with http status unauthorized' do
+        get v1_story_path(story)
+
+        expect(response).to have_http_status :unauthorized
+      end
+    end
+
+    context 'when the user is not authorized' do
+      it 'responds with http status forbidden' do
+        user = FactoryBot.create(:user)
+
+        get v1_story_path(story), headers: sign_in(user)
+
+        expect(response).to have_http_status :forbidden
       end
     end
   end
