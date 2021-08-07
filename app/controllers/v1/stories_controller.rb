@@ -20,30 +20,30 @@ module V1
       render json: ::StoryBlueprint.render(record, blueprint_view)
     end
 
-    # def create
-    #   record = Recipe.new(recipe_params)
+    def create
+      record = Story.new(story_params)
 
-    #   authorize record
+      authorize record
 
-    #   record.save!
+      record.save!
 
-    #   render json: ::StoryBlueprint.render(record)
-    # end
+      render json: ::StoryBlueprint.render(record, blueprint_view)
+    end
 
     # def update
-    #   record = Recipe.find(params[:id])
+    #   record = Story.find(params[:id])
 
-    #   record.assign_attributes(recipe_params)
+    #   record.assign_attributes(story_params)
 
     #   authorize record
 
     #   record.save!
 
-    #   render json: ::StoryBlueprint.render(record)
+    #   render json: ::StoryBlueprint.render(record, blueprint_view)
     # end
 
     # def destroy
-    #   record = Recipe.find(params[:id])
+    #   record = Story.find(params[:id])
 
     #   authorize record
 

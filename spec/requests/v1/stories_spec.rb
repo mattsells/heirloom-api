@@ -193,4 +193,44 @@ RSpec.describe 'Stories', type: :request do
       end
     end
   end
+
+  describe 'POST /v1/stories' do
+    context 'when the params are valid' do
+      it 'creates a story' do
+        expect { post v1_stories_path, headers: sign_in(user), params: valid_params.to_json }.to change(Story, :count).by 1
+      end
+
+      it 'responds with the new story' do
+        post v1_stories_path, headers: sign_in(user), params: valid_params.to_json
+
+        expect(body_of(response)).to match(hash_including(valid_params[:story].slice(:name)))
+      end
+    end
+
+    context 'when the params are invalid' do
+      it 'responds with http status bad_request' do
+        post v1_stories_path, headers: sign_in(user), params: invalid_params.to_json
+
+        expect(response).to have_http_status :bad_request
+      end
+    end
+
+    context 'when the user is not authenticated' do
+      it 'responds with http status unauthorized' do
+        post v1_stories_path, params: valid_params.to_json
+
+        expect(response).to have_http_status :unauthorized
+      end
+    end
+
+    context 'when the user is not authorized' do
+      it 'responds with http status forbidden' do
+        user = FactoryBot.create(:user)
+
+        post v1_stories_path, headers: sign_in(user), params: valid_params.to_json
+
+        expect(response).to have_http_status :forbidden
+      end
+    end
+  end
 end

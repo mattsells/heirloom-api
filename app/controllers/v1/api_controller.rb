@@ -10,6 +10,8 @@ module V1
 
     after_action :verify_authorized
 
+    # ArgumentError occurs when an enum value is not valid
+    rescue_from ArgumentError,                with: :invalid_params
     rescue_from ActiveRecord::RecordInvalid,  with: :invalid_params
     rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
     rescue_from Pundit::NotAuthorizedError,   with: :user_not_authorized
@@ -20,7 +22,8 @@ module V1
     # Error response handlers
 
     def invalid_params(error)
-      render error(:bad_request, error.record)
+      content = error.respond_to?(:record) ? error.record : error.message
+      render error(:bad_request, content)
     end
 
     def record_not_found
