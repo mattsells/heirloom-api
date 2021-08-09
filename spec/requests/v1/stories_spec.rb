@@ -150,7 +150,7 @@ RSpec.describe 'Stories', type: :request do
     end
   end
 
-  describe 'GET /v1/story/:id' do
+  describe 'GET /v1/stories/:id' do
     let(:story) { FactoryBot.create(:story, account: account) }
 
     context 'when the record exists' do

@@ -15,8 +15,8 @@ Rails.application.routes.draw do
     end
 
     namespace :v1 do
-      resources :recipes
-      resources :stories
+      resources :recipes, :stories
+      resources :users, only: :show
     end
   end
 end
