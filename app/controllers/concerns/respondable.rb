@@ -5,7 +5,7 @@ module Respondable
 
   def respond_with(resource, **config)
     if resource.persisted?
-      render json: ::UserBlueprint.render(resource), status: config[:status] || :ok
+      render json: ::UserBlueprint.render(resource, blueprint_view), status: config[:status] || :ok
     else
       render error(:bad_request, resource)
     end
