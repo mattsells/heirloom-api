@@ -41,6 +41,9 @@ group :development, :test do
   gem 'rspec-rails', '~> 5.0.0'
   gem 'shoulda-matchers', '~> 5.0'
   gem 'simplecov', require: false
+
+  # Display schema in model files
+  gem 'annotate'
 end
 
 group :development do
