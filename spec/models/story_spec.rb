@@ -1,5 +1,28 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: stories
+#
+#  id           :bigint           not null, primary key
+#  content_type :integer          default("image"), not null
+#  description  :text
+#  image_data   :json
+#  name         :string
+#  story_type   :integer          default("artifact"), not null
+#  video_data   :json
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  account_id   :bigint           not null
+#
+# Indexes
+#
+#  index_stories_on_account_id  (account_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (account_id => accounts.id)
+#
 require 'rails_helper'
 
 RSpec.describe Story, type: :model do
