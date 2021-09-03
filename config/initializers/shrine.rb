@@ -4,6 +4,7 @@ require 'shrine'
 require 'shrine/storage/file_system'
 require 'shrine/storage/memory'
 
+# TODO: Change production to cloud storage
 Shrine.storages = if Rails.env.production?
                     {
                       cache: Shrine::Storage::FileSystem.new('public', prefix: 'uploads/cache'),
