@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     end
 
     namespace :v1 do
+      resources :account_users, only: :index
       resources :recipes, :stories
       resources :users, only: :show
     end

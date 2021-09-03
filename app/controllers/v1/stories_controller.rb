@@ -6,7 +6,6 @@ module V1
       authorize Story
 
       records = policy_scope(Story)
-                .extended_includes(params, :stories)
                 .sift(on(:account, :content_type, :story_type, :name))
 
       render json: ::StoryBlueprint.render(records, blueprint_view)

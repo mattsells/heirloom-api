@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Stories', type: :request do
+RSpec.describe 'V1::Users', type: :request do
   let(:user) { FactoryBot.create(:user) }
 
   describe 'GET /v1/users/:id' do

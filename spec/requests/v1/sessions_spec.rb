@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Sessions', type: :request do
+RSpec.describe 'V1::Sessions', type: :request do
   describe 'POST /v1/users/sign_in' do
     before { FactoryBot.create(:user, email: 'user+1@example.com', password: 'password') }
 

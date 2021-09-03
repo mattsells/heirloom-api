@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Registrations', type: :request do
+RSpec.describe 'V1::Registrations', type: :request do
   describe 'POST /v1/users' do
     context 'when the params are valid' do
       let(:params) do

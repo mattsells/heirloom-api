@@ -5,4 +5,8 @@ class AccountBlueprint < Blueprinter::Base
 
   view :normal do
   end
+
+	view :extended do
+    include_view :normal
+  end
 end
