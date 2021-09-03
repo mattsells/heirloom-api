@@ -22,6 +22,8 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class AccountUser < ApplicationRecord
+  include Filterable
+
   belongs_to :account
   belongs_to :user
 
@@ -30,4 +32,6 @@ class AccountUser < ApplicationRecord
     admin: 1,
     owner: 2
   }
+
+  scope :filter_by_user, ->(user_id) { where user_id: user_id }
 end
