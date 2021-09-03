@@ -23,4 +23,5 @@ Shrine.storages = if Rails.env.production?
                   end
 
 Shrine.plugin :activerecord
-Shrine.plugin :upload_endpoint
+Shrine.plugin :determine_mime_type
+Shrine.plugin :upload_endpoint, url: true
