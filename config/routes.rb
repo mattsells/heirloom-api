@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  mount ImageUploader.upload_endpoint(:cache) => '/images/upload'
+  mount VideoUploader.upload_endpoint(:cache) => '/videos/upload'
+
   # Set up user mapping but do not add any routes as these will be declared manually for
   # multiple namespace usage
   devise_for :user, only: %w[]

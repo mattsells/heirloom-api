@@ -23,3 +23,4 @@ Shrine.storages = if Rails.env.production?
                   end
 
 Shrine.plugin :activerecord
+Shrine.plugin :upload_endpoint
