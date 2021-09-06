@@ -11,6 +11,11 @@ module Respondable
     end
   end
 
+  # On destroy method on user sign out
+  def respond_to_on_destroy
+    render success(I18n.t('session.signed_out'))
+  end
+
   def success(message, status = :ok)
     {
       json: {

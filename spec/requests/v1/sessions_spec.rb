@@ -43,4 +43,24 @@ RSpec.describe 'V1::Sessions', type: :request do
       end
     end
   end
+
+  describe 'GET /v1/users/sign_out' do
+    before do
+      FactoryBot.create(:user, email: 'user+1@example.com', password: 'password')
+
+      params = {
+        user: {
+          email: 'user+1@example.com',
+          password: 'password'
+        }
+      }
+
+      post v1_user_session_path, params: params
+    end
+
+    it 'responds with http status ok' do
+      get v1_destroy_user_session_path
+      expect(response).to have_http_status(:ok)
+    end
+  end
 end

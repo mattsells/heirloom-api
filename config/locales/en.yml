@@ -34,4 +34,6 @@ en:
     not_found: The requested record could not be found
     unauthorized: You are not permitted to perform this action
   general:
-    destroyed: The record was successfuly destroyed
+    destroyed: The record was successfully destroyed
+  session:
+    signed_out: User has been successfully signed out
