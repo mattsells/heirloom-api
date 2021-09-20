@@ -48,8 +48,6 @@ RSpec.describe 'V1::Recipes', type: :request do
           :account_id,
           :cover_image_url,
           :id,
-          :directions,
-          :ingredients,
           :name
         )
       end

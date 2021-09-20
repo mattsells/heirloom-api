@@ -6,13 +6,13 @@ class RecipeBlueprint < Blueprinter::Base
   view :normal do
     fields :account_id,
            :cover_image_url,
-           :directions,
-           :ingredients,
            :name
   end
 
   view :extended do
     include_view :normal
     association :stories, blueprint: StoryBlueprint
+
+    fields :directions, :ingredients
   end
 end
