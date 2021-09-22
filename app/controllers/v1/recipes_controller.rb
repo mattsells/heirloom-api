@@ -57,10 +57,10 @@ module V1
     def recipe_params
       params.require(:recipe).permit(
         :account_id,
-        :cover_image,
-        :directions,
-        :ingredients,
-        :name
+        :name,
+        cover_image: {},
+        ingredients: [],
+        directions: []
       )
     end
   end

@@ -11,8 +11,8 @@ RSpec.describe 'V1::Recipes', type: :request do
       recipe: {
         account_id: account.id,
         cover_image: Support::Attachments.image_data,
-        directions: ['Step 1', 'Step 2'].to_json,
-        ingredients: ['Ingredient 1', 'Ingredient 2'].to_json,
+        directions: ['Step 1', 'Step 2'],
+        ingredients: ['Ingredient 1', 'Ingredient 2'],
         name: 'New Recipe'
       }
     }
