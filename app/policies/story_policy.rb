@@ -3,7 +3,7 @@
 class StoryPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.where(account_id: user.accounts.pluck(:id))
+      scope.where(account_id: user.accounts.select(:id))
     end
   end
 

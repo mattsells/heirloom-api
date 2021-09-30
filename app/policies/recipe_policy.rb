@@ -5,7 +5,7 @@ class RecipePolicy < ApplicationPolicy
     def resolve
       # For now only pull recipes on any of the user's accounts
       # This might change to include "public" recipes from other accounts
-      scope.where(account_id: user.accounts.pluck(:id))
+      scope.where(account_id: user.accounts.select(:id))
     end
   end
 
