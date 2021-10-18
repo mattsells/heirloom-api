@@ -51,8 +51,12 @@ module Respondable
   def blueprint_view
     is_extended = ActiveModel::Type::Boolean.new.cast(params[:extended])
 
-    {
-      view: is_extended ? :extended : :normal
-    }
+    if is_extended
+      {
+        view: is_extended ? :extended : :normal
+      }
+    else
+      {}
+    end
   end
 end

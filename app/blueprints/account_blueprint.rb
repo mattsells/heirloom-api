@@ -3,10 +3,6 @@
 class AccountBlueprint < Blueprinter::Base
   identifier :id
 
-  view :normal do
-  end
-
-	view :extended do
-    include_view :normal
+  view :extended do
   end
 end

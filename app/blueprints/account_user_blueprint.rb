@@ -3,12 +3,9 @@
 class AccountUserBlueprint < Blueprinter::Base
   identifier :id
 
-  view :normal do
-    fields :account_id, :role, :user_id
-  end
+  fields :account_id, :role, :user_id
 
   view :extended do
-    include_view :normal
     association :account, blueprint: AccountBlueprint
     association :user, blueprint: UserBlueprint
   end

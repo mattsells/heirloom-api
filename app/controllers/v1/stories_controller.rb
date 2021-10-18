@@ -61,7 +61,8 @@ module V1
         :image,
         :name,
         :story_type,
-        :video
+        :video,
+        recipe_ids: []
       )
     end
   end

@@ -3,11 +3,8 @@
 class UserBlueprint < Blueprinter::Base
   identifier :id
 
-  view :normal do
-    field :email
-  end
+  field :email
 
   view :extended do
-    include_view :normal
   end
 end
