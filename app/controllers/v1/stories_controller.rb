@@ -58,11 +58,11 @@ module V1
         :account_id,
         :content_type,
         :description,
-        :image,
         :name,
         :story_type,
-        :video,
-        recipe_ids: []
+        image: {},
+        recipe_ids: [],
+        video: {}
       )
     end
   end
