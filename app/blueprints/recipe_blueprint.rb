@@ -10,6 +10,6 @@ class RecipeBlueprint < Blueprinter::Base
   view :extended do
     association :stories, blueprint: StoryBlueprint
 
-    fields :directions, :ingredients
+    fields :cover_image_data, :directions, :ingredients
   end
 end
