@@ -66,6 +66,22 @@ GEM
       activerecord (>= 3.2, < 7.0)
       rake (>= 10.4, < 14.0)
     ast (2.4.2)
+    aws-eventstream (1.2.0)
+    aws-partitions (1.521.0)
+    aws-sdk-core (3.121.5)
+      aws-eventstream (~> 1, >= 1.0.2)
+      aws-partitions (~> 1, >= 1.520.1)
+      aws-sigv4 (~> 1.1)
+      jmespath (~> 1.0)
+    aws-sdk-kms (1.50.0)
+      aws-sdk-core (~> 3, >= 3.121.2)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-s3 (1.104.0)
+      aws-sdk-core (~> 3, >= 3.121.2)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.4)
+    aws-sigv4 (1.4.0)
+      aws-eventstream (~> 1, >= 1.0.2)
     bcrypt (3.1.16)
     blueprinter (0.25.3)
     bootsnap (1.7.5)
@@ -89,10 +105,6 @@ GEM
       warden-jwt_auth (~> 0.5)
     diff-lcs (1.4.4)
     docile (1.4.0)
-    dotenv (2.7.6)
-    dotenv-rails (2.7.6)
-      dotenv (= 2.7.6)
-      railties (>= 3.2)
     down (5.2.2)
       addressable (~> 2.5)
     dry-auto_inject (0.8.0)
@@ -116,6 +128,7 @@ GEM
       activesupport (>= 4.2.0)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
+    jmespath (1.4.0)
     jwt (2.2.3)
     listen (3.6.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -133,6 +146,8 @@ GEM
     multi_json (1.15.0)
     nio4r (2.5.7)
     nokogiri (1.11.7-x86_64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.11.7-x86_64-linux)
       racc (~> 1.4)
     olive_branch (4.0.0)
       multi_json
@@ -263,16 +278,17 @@ GEM
 
 PLATFORMS
   x86_64-darwin-20
+  x86_64-linux
 
 DEPENDENCIES
   annotate
+  aws-sdk-s3 (~> 1.14)
   blueprinter
   bootsnap (>= 1.4.4)
   bullet
   byebug
   devise
   devise-jwt
-  dotenv-rails
   factory_bot_rails
   listen (~> 3.3)
   olive_branch

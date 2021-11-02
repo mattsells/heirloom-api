@@ -7,9 +7,6 @@ ruby '3.0.0'
 
 gem 'rails', '~> 6.1.4'
 
-# Env loading
-gem 'dotenv-rails'
-
 # Database
 gem 'pg', '~> 1.1'
 
@@ -27,6 +24,7 @@ gem 'blueprinter'
 gem 'olive_branch'
 
 # File storage
+gem 'aws-sdk-s3', '~> 1.14'
 gem 'shrine', '~> 3.0'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
