@@ -35,11 +35,11 @@ FactoryBot.define do
     end
 
     trait(:with_directions) do
-      directions { ['direction 1', 'direction 2', 'direction_3'].to_json }
+      directions { ['direction 1', 'direction 2', 'direction_3'] }
     end
 
     trait(:with_ingredients) do
-      ingredients { ['ingredient 1', 'ingredient 2', 'ingredient_3'].to_json }
+      ingredients { ['ingredient 1', 'ingredient 2', 'ingredient_3'] }
     end
   end
 end
