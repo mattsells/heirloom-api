@@ -42,6 +42,9 @@ group :development, :test do
 
   # Display schema in model files
   gem 'annotate'
+
+  # Development env loading
+  gem 'figaro'
 end
 
 group :development do
