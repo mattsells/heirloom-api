@@ -32,3 +32,6 @@ Shrine.storages = if Rails.env.production?
 Shrine.plugin :activerecord
 Shrine.plugin :determine_mime_type
 Shrine.plugin :upload_endpoint, url: true
+
+# Custom plugins
+Shrine.plugin LocalHost
