@@ -6,10 +6,11 @@ require 'shrine/storage/memory'
 require 'shrine/storage/s3'
 
 s3_options = {
-  bucket: ENV['AWS_S3_BUCKET'],
-  region: ENV['AWS_S3_REGION'],
-  access_key_id: ENV['AWS_ACCESS_KEY_ID'],
-  secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
+  access_key_id: ENV['ASSET_ACCESS_KEY_ID'],
+  bucket: ENV['ASSET_BUCKET'],
+  endpoint: ENV['ASSET_ENDPOINT'],
+  region: ENV['ASSET_REGION'],
+  secret_access_key: ENV['ASSET_SECRET_ACCESS_KEY']
 }
 
 Shrine.storages = if Rails.env.production?
