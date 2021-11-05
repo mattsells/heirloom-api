@@ -16,7 +16,7 @@ s3_options = {
 Shrine.storages = if Rails.env.production?
                     {
                       cache: Shrine::Storage::S3.new(prefix: 'uploads/cache', **s3_options),
-                      store: Shrine::Storage::S3.new(prefix: 'uploads/cache', **s3_options)
+                      store: Shrine::Storage::S3.new(prefix: 'uploads', **s3_options)
                     }
                   elsif Rails.env.development?
                     {
