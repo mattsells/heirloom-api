@@ -7,11 +7,11 @@
 
 # Read more: https://github.com/cyu/rack-cors
 
-# TODO: Update CORS configuration before production launch. This is needed for the
-# fetch API to be able to read the Auth header
+allowed_origins = Rails.env.production? ? ENV['WEB_CLIENT_ORIGIN'] : '*'
+
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins '*'
+    origins allowed_origins
     resource '*',
              expose: %w[Authorization],
              headers: :any,
