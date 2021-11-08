@@ -36,6 +36,10 @@ module Filterable
 
       page = params[:page] || 1
       per = params[:per] || 20
+
+      page = page.to_i if page.is_a?(String)
+      per = per.to_i if per.is_a?(String)
+
       offset = (page - 1) * per
 
       results = results.offset(offset).limit(per)
