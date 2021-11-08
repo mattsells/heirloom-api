@@ -5,10 +5,11 @@ module V1
     def index
       authorize Story
 
-      records = policy_scope(Story)
-                .sift(on(:account, :content_type, :story_type, :name))
+      records, meta = policy_scope(Story)
+                      .sift(on(:account, :content_type, :story_type, :name))
+                      .paginate(params)
 
-      render json: ::StoryBlueprint.render(records, blueprint_view)
+      render json: ::StoryBlueprint.render(records, { **blueprint_view, root: :stories, meta: meta })
     end
 
     def show

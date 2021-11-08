@@ -16,13 +16,13 @@ RSpec.describe 'V1::AccountUsers', type: :request do
       it 'returns only records that the user has access to' do
         get v1_account_users_path, headers: sign_in(user)
 
-        expect(ids_of(response)).to contain_exactly(*account.account_users.pluck(:id))
+        expect(ids_of(response, :account_users)).to contain_exactly(*account.account_users.pluck(:id))
       end
 
       it 'renders the records with the normal blueprint by default' do
         get v1_account_users_path, headers: sign_in(user)
 
-        record = body_of(response).first
+        record = body_of(response, :account_users).first
 
         expect(record.keys).to contain_exactly(
           :account_id,
@@ -35,7 +35,7 @@ RSpec.describe 'V1::AccountUsers', type: :request do
       it 'renders the records with the extended blueprint if specified' do
         get v1_account_users_path, headers: sign_in(user), params: { extended: true }
 
-        record = body_of(response).first
+        record = body_of(response, :account_users).first
 
         expect(record.keys).to contain_exactly(
           :account,
@@ -56,7 +56,7 @@ RSpec.describe 'V1::AccountUsers', type: :request do
 
         get v1_account_users_path, headers: sign_in(user), params: params
 
-        expect(ids_of(response)).to contain_exactly(*user.account_users.pluck(:id))
+        expect(ids_of(response, :account_users)).to contain_exactly(*user.account_users.pluck(:id))
       end
     end
 
