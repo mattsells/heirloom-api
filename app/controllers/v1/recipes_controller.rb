@@ -5,11 +5,12 @@ module V1
     def index
       authorize Recipe
 
-      records = policy_scope(Recipe)
-                .extended_includes(params, :stories)
-                .sift(on(:account, :name))
+      records, meta = policy_scope(Recipe)
+                      .extended_includes(params, :stories)
+                      .sift(on(:account, :name))
+                      .paginate(params)
 
-      render json: ::RecipeBlueprint.render(records, blueprint_view)
+      render json: ::RecipeBlueprint.render(records, { **blueprint_view, root: :recipes, meta: meta })
     end
 
     def show

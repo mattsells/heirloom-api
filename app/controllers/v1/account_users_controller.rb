@@ -5,11 +5,12 @@ module V1
     def index
       authorize AccountUser
 
-      records = policy_scope(AccountUser)
-                .extended_includes(params, :account, :user)
-                .sift(on(:user))
+      records, meta = policy_scope(AccountUser)
+                      .extended_includes(params, :account, :user)
+                      .sift(on(:user))
+                      .paginate(params)
 
-      render json: ::AccountUserBlueprint.render(records, blueprint_view)
+      render json: ::AccountUserBlueprint.render(records, { **blueprint_view, root: :account_users, meta: meta })
     end
   end
 end

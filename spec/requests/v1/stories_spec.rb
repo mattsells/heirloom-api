@@ -40,13 +40,13 @@ RSpec.describe 'V1::Stories', type: :request do
       it 'returns only records that the user has access to' do
         get v1_stories_path, headers: sign_in(user)
 
-        expect(ids_of(response)).to contain_exactly(*owned_records.pluck(:id))
+        expect(ids_of(response, :stories)).to contain_exactly(*owned_records.pluck(:id))
       end
 
       it 'renders the records with the normal blueprint by default' do
         get v1_stories_path, headers: sign_in(user)
 
-        record = body_of(response).first
+        record = body_of(response, :stories).first
 
         expect(record.keys).to contain_exactly(
           :account_id,
@@ -63,7 +63,7 @@ RSpec.describe 'V1::Stories', type: :request do
       it 'renders the records with the extended blueprint if specified' do
         get v1_stories_path, headers: sign_in(user), params: { extended: true }
 
-        record = body_of(response).first
+        record = body_of(response, :stories).first
 
         expect(record.keys).to contain_exactly(
           :account_id,
@@ -90,7 +90,7 @@ RSpec.describe 'V1::Stories', type: :request do
 
         get v1_stories_path, headers: sign_in(user), params: params
 
-        expect(ids_of(response)).to contain_exactly(record.id)
+        expect(ids_of(response, :stories)).to contain_exactly(record.id)
       end
 
       it 'filters the records on name' do
@@ -104,7 +104,7 @@ RSpec.describe 'V1::Stories', type: :request do
 
         get v1_stories_path, headers: sign_in(user), params: params
 
-        expect(ids_of(response)).to contain_exactly(record.id)
+        expect(ids_of(response, :stories)).to contain_exactly(record.id)
       end
 
       it 'filters the records on content_type' do
@@ -119,7 +119,7 @@ RSpec.describe 'V1::Stories', type: :request do
 
         get v1_stories_path, headers: sign_in(user), params: params
 
-        content_types = body_of(response).map { |story| story[:content_type] }.uniq
+        content_types = body_of(response, :stories).map { |story| story[:content_type] }.uniq
         expect(content_types).to contain_exactly('image')
       end
 
@@ -136,7 +136,7 @@ RSpec.describe 'V1::Stories', type: :request do
 
         get v1_stories_path, headers: sign_in(user), params: params
 
-        story_type = body_of(response).map { |story| story[:story_type] }.uniq
+        story_type = body_of(response, :stories).map { |story| story[:story_type] }.uniq
         expect(story_type).to contain_exactly('artifact')
       end
     end

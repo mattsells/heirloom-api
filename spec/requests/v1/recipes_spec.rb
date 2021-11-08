@@ -36,13 +36,13 @@ RSpec.describe 'V1::Recipes', type: :request do
       it 'returns only records that the user has access to' do
         get v1_recipes_path, headers: sign_in(user)
 
-        expect(ids_of(response)).to contain_exactly(*owned_recipes.pluck(:id))
+        expect(ids_of(response, :recipes)).to contain_exactly(*owned_recipes.pluck(:id))
       end
 
       it 'renders the records with the normal blueprint by default' do
         get v1_recipes_path, headers: sign_in(user)
 
-        record = body_of(response).first
+        record = body_of(response, :recipes).first
 
         expect(record.keys).to contain_exactly(
           :account_id,
@@ -55,7 +55,7 @@ RSpec.describe 'V1::Recipes', type: :request do
       it 'renders the records with the extended blueprint if specified' do
         get v1_recipes_path, headers: sign_in(user), params: { extended: true }
 
-        record = body_of(response).first
+        record = body_of(response, :recipes).first
 
         expect(record.keys).to contain_exactly(
           :account_id,
@@ -82,7 +82,7 @@ RSpec.describe 'V1::Recipes', type: :request do
 
         get v1_recipes_path, headers: sign_in(user), params: params
 
-        expect(ids_of(response)).to contain_exactly(recipe.id)
+        expect(ids_of(response, :recipes)).to contain_exactly(recipe.id)
       end
 
       it 'filters the records on name' do
@@ -96,7 +96,7 @@ RSpec.describe 'V1::Recipes', type: :request do
 
         get v1_recipes_path, headers: sign_in(user), params: params
 
-        expect(ids_of(response)).to contain_exactly(recipe.id)
+        expect(ids_of(response, :recipes)).to contain_exactly(recipe.id)
       end
     end
 

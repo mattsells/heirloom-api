@@ -27,5 +27,28 @@ module Filterable
 
       results
     end
+
+    # TODO: Add tests for this
+    def paginate(params)
+      results = where(nil)
+
+      count = results.count
+
+      page = params[:page] || 1
+      per = params[:per] || 20
+      offset = (page - 1) * per
+
+      results = results.offset(offset).limit(per)
+
+      next_page = page * per < count ? page + 1 : nil
+
+      meta = {
+        total: count,
+        current_page: page,
+        next_page: next_page
+      }
+
+      [results, meta]
+    end
   end
 end
