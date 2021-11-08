@@ -3,7 +3,7 @@
 print 'Seeding recipes'
 
 Account.all.find_each do |account|
-  4.times do
+  50.times do
     FactoryBot.create(:recipe, :with_cover_image, :with_directions, :with_ingredients, account: account)
     print '.'
   end
