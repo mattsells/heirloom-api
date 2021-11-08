@@ -11,7 +11,7 @@ def random_content_type
 end
 
 Recipe.all.find_each do |recipe|
-  8.times do
+  3.times do
     story = FactoryBot.create(:story, random_content_type, account: recipe.account, story_type: random_story_type)
     RecipeStory.create(recipe: recipe, story: story)
     print '.'

@@ -2,13 +2,13 @@
 
 print 'Seeding users'
 
-5.times do
+2.times do
   FactoryBot.create(:user)
   print '.'
 end
 
 Account.all.find_each do |account|
-  3.times do
+  2.times do
     user = FactoryBot.create(:user)
     AccountUser.create(account: account, user: user, role: 'standard')
     print '.'
