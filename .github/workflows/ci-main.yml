@@ -1,10 +1,26 @@
 name: ci-main
 
-on: [push]
+on: [pull_request]
 
 jobs:
   test:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_DB: test_db
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -14,6 +30,31 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Install dependent libraries
+        run: sudo apt-get install libpq-dev
+
+      - name: Setup Database
+        run: |
+          cp config/database.yml.github-actions config/database.yml
+          bundle exec rails db:create
+          bundle exec rails db:schema:load
+        env:
+          RAILS_ENV: test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test_db
+          POSTGRES_HOST: 127.0.0.1
+
       - name: Run linter
         run: |
-          bin/rubocop
+          bundle exec rubocop
+
+      - name: Run RSpec
+        run: COVERAGE=true bundle exec rspec
+        env:
+          RAILS_ENV: test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test_db
+          POSTGRES_HOST: 127.0.0.1
+          DEVISE_JWT_SECRET_KEY: c54aaa67952b594b6759d518c25dee0e492e8e85eb9da27be61825e35b265a6917fb118cbabc546a21d1f48c31c841b9cdb025c204cb0cacb062ef4f1268e6a2
