@@ -34,6 +34,9 @@ class Story < ApplicationRecord
 
   has_many :recipes, through: :recipe_stories
 
+  validates :description, length: { maximum: 10_000 }
+  validates :name, length: { maximum: 256 }
+
   enum content_type: {
     image: 0,
     video: 1

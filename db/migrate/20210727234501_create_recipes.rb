@@ -5,7 +5,7 @@ class CreateRecipes < ActiveRecord::Migration[6.1]
     create_table :recipes do |t|
       t.belongs_to :account, null: false, foreign_key: true
 
-      t.string :name, null: false, length: 200
+      t.string :name, null: false, length: 256
 
       t.json :cover_image_data
 

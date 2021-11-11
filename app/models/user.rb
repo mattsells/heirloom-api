@@ -41,6 +41,8 @@ class User < ApplicationRecord
     AccountUser.find_by(account: account, role: admin_roles, user: self).present?
   end
 
+  validates :email, length: { maximum: 256 }
+
   after_create :create_user_account
 
   private
