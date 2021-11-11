@@ -6,5 +6,6 @@ class UserBlueprint < Blueprinter::Base
   field :email
 
   view :extended do
+    identifier :id
   end
 end

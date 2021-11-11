@@ -4,5 +4,6 @@ class AccountBlueprint < Blueprinter::Base
   identifier :id
 
   view :extended do
+    identifier :id
   end
 end

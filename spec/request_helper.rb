@@ -23,7 +23,7 @@ module RequestHelper
   end
 
   def ids_of(response, key = nil)
-    body_of(response, key).map { |record| record[:id] }
+    body_of(response, key).pluck(:id)
   end
 
   def id_of(response)
