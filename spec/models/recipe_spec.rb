@@ -35,7 +35,7 @@ RSpec.describe Recipe, type: :model do
 
       it { is_expected.to validate_presence_of :name }
       it { is_expected.to validate_uniqueness_of(:name).scoped_to(:account_id) }
-      it { is_expected.to validate_length_of(:name).is_at_most(200) }
+      it { is_expected.to validate_length_of(:name).is_at_most(256) }
     end
 
     describe 'ingredients' do

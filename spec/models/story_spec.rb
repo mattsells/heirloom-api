@@ -46,6 +46,14 @@ RSpec.describe Story, type: :model do
         expect(record.video.mime_type).to eq('video/mp4')
       end
     end
+
+    describe 'description' do
+      it { is_expected.to validate_length_of(:description).is_at_most(10_000) }
+    end
+
+    describe 'name' do
+      it { is_expected.to validate_length_of(:name).is_at_most(256) }
+    end
   end
 
   describe 'Associations' do

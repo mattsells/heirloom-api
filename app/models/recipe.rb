@@ -34,7 +34,7 @@ class Recipe < ApplicationRecord
 
   validates :name,
             presence: true,
-            length: { maximum: 200 },
+            length: { maximum: 256 },
             uniqueness: { scope: :account_id }
 
   validates :ingredients, presence: true

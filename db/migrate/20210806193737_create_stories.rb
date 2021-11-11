@@ -9,7 +9,7 @@ class CreateStories < ActiveRecord::Migration[6.1]
       t.integer :story_type,   null: false, default: 0
 
       t.string :name
-      t.text :description
+      t.text :description, limit: 10_000
 
       t.json :image_data
       t.json :video_data
