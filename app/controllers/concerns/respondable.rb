@@ -53,7 +53,7 @@ module Respondable
 
     if is_extended
       {
-        view: is_extended ? :extended : :normal
+        view: :extended
       }
     else
       {}

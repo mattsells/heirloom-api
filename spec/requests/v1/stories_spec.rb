@@ -119,7 +119,7 @@ RSpec.describe 'V1::Stories', type: :request do
 
         get v1_stories_path, headers: sign_in(user), params: params
 
-        content_types = body_of(response, :stories).map { |story| story[:content_type] }.uniq
+        content_types = body_of(response, :stories).pluck(:content_type).uniq
         expect(content_types).to contain_exactly('image')
       end
 
@@ -136,7 +136,7 @@ RSpec.describe 'V1::Stories', type: :request do
 
         get v1_stories_path, headers: sign_in(user), params: params
 
-        story_type = body_of(response, :stories).map { |story| story[:story_type] }.uniq
+        story_type = body_of(response, :stories).pluck(:story_type).uniq
         expect(story_type).to contain_exactly('artifact')
       end
     end
