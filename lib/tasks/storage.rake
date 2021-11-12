@@ -9,8 +9,6 @@ namespace :storage do
       one_week_in_seconds = 7 * 24 * 60 * 60
 
       cache.clear! { |object| object.last_modified < Time.current - one_week_in_seconds }
-    else
-      puts 'Cache can only be cleared in production'
     end
   end
 end

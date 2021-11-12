@@ -4,8 +4,19 @@ class RecipeBlueprint < Blueprinter::Base
   identifier :id
 
   fields :account_id,
-         :cover_image_url,
          :name
+
+  field :cover_image_url_small do |recipe|
+    recipe.cover_image_url(:small)
+  end
+
+  field :cover_image_url_medium do |recipe|
+    recipe.cover_image_url(:medium)
+  end
+
+  field :cover_image_url_large do |recipe|
+    recipe.cover_image_url(:large)
+  end
 
   view :extended do
     association :stories, blueprint: StoryBlueprint

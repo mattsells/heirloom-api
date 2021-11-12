@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'image_processing/mini_magick'
 require 'shrine'
 require 'shrine/storage/file_system'
 require 'shrine/storage/memory'
@@ -30,9 +31,11 @@ Shrine.storages = if Rails.env.production?
                     }
                   end
 
+# Module plugins
 Shrine.plugin :activerecord
 Shrine.plugin :determine_mime_type
 Shrine.plugin :upload_endpoint, url: true
+Shrine.plugin :derivatives, create_on_promote: true
 
 # Custom plugins
 Shrine.plugin LocalHost
