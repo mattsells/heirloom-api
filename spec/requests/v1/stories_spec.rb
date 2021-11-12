@@ -53,7 +53,9 @@ RSpec.describe 'V1::Stories', type: :request do
           :content_type,
           :description,
           :id,
-          :image_url,
+          :image_url_small,
+          :image_url_medium,
+          :image_url_large,
           :name,
           :story_type,
           :video_url
@@ -70,7 +72,9 @@ RSpec.describe 'V1::Stories', type: :request do
           :content_type,
           :description,
           :id,
-          :image_url,
+          :image_url_small,
+          :image_url_medium,
+          :image_url_large,
           :name,
           :story_type,
           :video_url

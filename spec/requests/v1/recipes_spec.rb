@@ -46,7 +46,9 @@ RSpec.describe 'V1::Recipes', type: :request do
 
         expect(record.keys).to contain_exactly(
           :account_id,
-          :cover_image_url,
+          :cover_image_url_small,
+          :cover_image_url_medium,
+          :cover_image_url_large,
           :id,
           :name
         )
@@ -60,7 +62,9 @@ RSpec.describe 'V1::Recipes', type: :request do
         expect(record.keys).to contain_exactly(
           :account_id,
           :cover_image_data,
-          :cover_image_url,
+          :cover_image_url_small,
+          :cover_image_url_medium,
+          :cover_image_url_large,
           :id,
           :directions,
           :ingredients,
